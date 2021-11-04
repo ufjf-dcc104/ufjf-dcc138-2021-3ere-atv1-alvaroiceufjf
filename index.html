@@ -17,10 +17,21 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
+        let x = 100; let y = 150;
+        let t0; let dt;
+        requestAnimationFrame(desenha);
+        
+        function desenha(t){
+            t0 = t0 ?? t;
+            dt = (t-t0)/1000;
 
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "white";
-        ctx.fillRect(100,150,20,20);
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "white";
+            ctx.fillRect(x,y,20,20);
+            requestAnimationFrame(desenha);
+            t0=t;
+        }
+        
     </script>
 </body>
 </html>
