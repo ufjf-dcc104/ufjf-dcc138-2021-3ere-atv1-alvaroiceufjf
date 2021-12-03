@@ -23,14 +23,11 @@
             vx : 0, vy : 0,
         };
 
-        let x = 150; let y = 100;
-        let ax = 0; ay = 0; 
-        let vx = 0; let vy = 0;
-
-
-        let ex = 300; let ey = 200;
-        let eax = 0; eay = 0; 
-        let evx = 0; let evy = 0;
+        let e = {
+            x : 300, y : 200,
+            ax : 0, ay : 0, 
+            vx : 0, vy : 0,
+        };
 
         const K=180;
         let t0; let dt;
@@ -41,9 +38,13 @@
             t0 = t0 ?? t;
             dt = (t-t0)/1000;
 
+            //Desenha fundo
+            ctx.fillStyle = "black";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+
             //Controladores
-            eay = 0.5*(p.y - ey) - 0.2*evy;
-            eax = 0.5*(p.x - ex) - 0.2*evx;
+            e.ay = 0.5*(p.y - e.y) - 0.2*e.vy;
+            e.ax = 0.5*(p.x - e.x) - 0.2*e.vx;
 
             //Dinâmica dos estados
             p.vx = p.vx + p.ax*dt;
@@ -51,19 +52,17 @@
             p.x = p.x+ p.vx*dt;
             p.y = p.y+ p.vy*dt;
 
-            evx = evx + eax*dt;
-            evy = evy + eay*dt;
-            ex = ex+ evx*dt;
-            ey = ey+ evy*dt;
-
-            //Desenha fundo
-            ctx.fillStyle = "black";
-            ctx.fillRect(0,0,canvas.width,canvas.height);
+            e.vx = e.vx + e.ax*dt;
+            e.vy = e.vy + e.ay*dt;
+            e.x = e.x+ e.vx*dt;
+            e.y = e.y+ e.vy*dt;
+            
             //Desenha elementos
             ctx.fillStyle = "white";
             ctx.fillRect(p.x,p.y,20,20);
+
             ctx.fillStyle = "red";
-            ctx.fillRect(ex,ey,20,20);
+            ctx.fillRect(e.x,e.y,20,20);
             requestAnimationFrame(desenha);
             t0=t;
         }
@@ -72,9 +71,9 @@
         addEventListener("keydown", teclaPressionada);
         addEventListener("keyup", teclaSolta);
 
-        function teclaPressionada(e){
-            console.log(e.key);
-            switch(e.key){
+        function teclaPressionada(event){
+            console.log(event.key);
+            switch(event.key){
                 case "ArrowUp":
                     p.ay = -K;
                     break;
@@ -95,9 +94,9 @@
             }
         }
 
-        function teclaSolta(e){
-            console.log(e.key);
-            switch(e.key){
+        function teclaSolta(event){
+            console.log(event.key);
+            switch(event.key){
                 case "ArrowUp":
                     p.ay = 0;
                     p.vy = 0;
