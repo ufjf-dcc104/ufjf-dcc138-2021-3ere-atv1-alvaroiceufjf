@@ -17,9 +17,16 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
+        let p = {
+            x : 150, y : 100,
+            ax : 0, ay : 0, 
+            vx : 0, vy : 0,
+        };
+
         let x = 150; let y = 100;
         let ax = 0; ay = 0; 
         let vx = 0; let vy = 0;
+
 
         let ex = 300; let ey = 200;
         let eax = 0; eay = 0; 
@@ -35,14 +42,14 @@
             dt = (t-t0)/1000;
 
             //Controladores
-            eay = 0.5*(y - ey) - 0.2*evy;
-            eax = 0.5*(x - ex) - 0.2*evx;
+            eay = 0.5*(p.y - ey) - 0.2*evy;
+            eax = 0.5*(p.x - ex) - 0.2*evx;
 
             //Dinâmica dos estados
-            vx = vx + ax*dt;
-            vy = vy + ay*dt;
-            x = x+ vx*dt;
-            y = y+ vy*dt;
+            p.vx = p.vx + p.ax*dt;
+            p.vy = p.vy + p.ay*dt;
+            p.x = p.x+ p.vx*dt;
+            p.y = p.y+ p.vy*dt;
 
             evx = evx + eax*dt;
             evy = evy + eay*dt;
@@ -54,7 +61,7 @@
             ctx.fillRect(0,0,canvas.width,canvas.height);
             //Desenha elementos
             ctx.fillStyle = "white";
-            ctx.fillRect(x,y,20,20);
+            ctx.fillRect(p.x,p.y,20,20);
             ctx.fillStyle = "red";
             ctx.fillRect(ex,ey,20,20);
             requestAnimationFrame(desenha);
@@ -69,19 +76,19 @@
             console.log(e.key);
             switch(e.key){
                 case "ArrowUp":
-                    ay = -K;
+                    p.ay = -K;
                     break;
                     
                 case "ArrowDown":
-                    ay = +K;
+                    p.ay = +K;
                     break;
 
                 case "ArrowRight":
-                    ax = +K;
+                    p.ax = +K;
                     break;
 
                 case "ArrowLeft":
-                    ax = -K;
+                    p.ax = -K;
                     break;
                 default:
                     break;
@@ -92,23 +99,23 @@
             console.log(e.key);
             switch(e.key){
                 case "ArrowUp":
-                    ay = 0;
-                    vy = 0;
+                    p.ay = 0;
+                    p.vy = 0;
                     break;
                     
                 case "ArrowDown":
-                    ay = 0;
-                    vy = 0;
+                    p.ay = 0;
+                    p.vy = 0;
                     break;
 
                 case "ArrowRight":
-                    ax = 0;
-                    vx = 0;
+                    p.ax = 0;
+                    p.vx = 0;
                     break;
 
                 case "ArrowLeft":
-                    ax = 0;
-                    vx = 0;
+                    p.ax = 0;
+                    p.vx = 0;
                     break;
             }
         }
