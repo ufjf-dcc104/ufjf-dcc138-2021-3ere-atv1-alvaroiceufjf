@@ -18,8 +18,9 @@
         canvas.width = 480;
         canvas.height = 320;
         let x = 235; let y = 155;
+        let ax = 0; ay = 0; 
         let vx = 0; let vy = 0;
-        const V=180;
+        const K=180;
         let t0; let dt;
         requestAnimationFrame(desenha);
         
@@ -29,6 +30,8 @@
             dt = (t-t0)/1000;
 
             //Dinâmica dos estados
+            vx = vx + ax*dt;
+            vy = vy + ay*dt;
             x = x+ vx*dt;
             y = y+ vy*dt;
 
@@ -50,19 +53,19 @@
             console.log(e.key);
             switch(e.key){
                 case "ArrowUp":
-                    vy = -V;
+                    ay = -K;
                     break;
                     
                 case "ArrowDown":
-                    vy = +V;
+                    ay = +K;
                     break;
 
                 case "ArrowRight":
-                    vx = +V;
+                    ax = +K;
                     break;
 
                 case "ArrowLeft":
-                    vx = -V;
+                    ax = -K;
                     break;
                 default:
                     break;
@@ -73,18 +76,22 @@
             console.log(e.key);
             switch(e.key){
                 case "ArrowUp":
+                    ay = 0;
                     vy = 0;
                     break;
                     
                 case "ArrowDown":
+                    ay = 0;
                     vy = 0;
                     break;
 
                 case "ArrowRight":
+                    ax = 0;
                     vx = 0;
                     break;
 
                 case "ArrowLeft":
+                    ax = 0;
                     vx = 0;
                     break;
             }
