@@ -23,19 +23,21 @@
             x : 150, y : 100,
             ax : 0, ay : 0, 
             vx : 0, vy : 0,
+            w:40, h:15,
             desenhar:desenharElemento,
             mover:moverElemento
             
         };
 
         const sprites=[];
-        for (let ne = 0; ne < 200 ; ne++) {
+        for (let ne = 0; ne < 20 ; ne++) {
             let e = {
                 cor : "red",
                 x : canvas.width *(1+10*Math.random()),
                 y : canvas.height *(1+Math.random()),
                 ax : 0, ay : 0, 
-                vx : 0, vy : 0,
+                vx : -20, vy : 0,
+                w:15, h:15,
                 desenhar:desenharElemento,
                 mover:moverElemento,
                 controlar:perseguirAlvo
@@ -48,6 +50,7 @@
             x : -1000, y : 150,
             ax : 0, ay : 0, 
             vx : 0, vy : 0,
+            w:5, h:5,
             desenhar:desenharElemento,
             mover:moverElemento,
             controlar: function(){
@@ -76,7 +79,7 @@
             //e.controlar({x:250, y:120});
 
             p.mover();
-            p.desenhar();
+            
 
             for (let s = 0; s < sprites.length; s++) {
                 const sprite = sprites[s];
@@ -103,6 +106,7 @@
                     pontos -= 5;
                 }
             }
+            p.desenhar();
             ctx.fillStyle= "yellow";
             ctx.fillText(pontos,10,30);
 
@@ -112,7 +116,7 @@
 
         function desenharElemento(){
                 ctx.fillStyle = this.cor;
-                ctx.fillRect(this.x,this.y,20,20);
+                ctx.fillRect(this.x,this.y,this.w,this.h);
             }
 
         function moverElemento(){
@@ -189,10 +193,10 @@
         }
 
         function colidiram(A,B) {
-            return!((A.x > B.x +20)
-            ||(A.x +20< B.x)
-            ||(A.y > B.y +20)
-            ||(A.y +20< B.y));
+            return!((A.x > B.x +B.w)
+            ||(A.x +A.w< B.x)
+            ||(A.y > B.y +B.h)
+            ||(A.y +A.h< B.y));
         }
     </script>
 </body>
