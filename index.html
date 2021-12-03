@@ -21,12 +21,20 @@
             x : 150, y : 100,
             ax : 0, ay : 0, 
             vx : 0, vy : 0,
+            desenhar:function(){
+                ctx.fillStyle = "white";
+                ctx.fillRect(this.x,this.y,20,20);
+            }
         };
 
         let e = {
             x : 300, y : 200,
             ax : 0, ay : 0, 
             vx : 0, vy : 0,
+            desenhar:function(){
+                ctx.fillStyle = "red";
+                ctx.fillRect(this.x,this.y,20,20);
+            }
         };
 
         const K=180;
@@ -58,11 +66,9 @@
             e.y = e.y+ e.vy*dt;
             
             //Desenha elementos
-            ctx.fillStyle = "white";
-            ctx.fillRect(p.x,p.y,20,20);
+            p.desenhar();
 
-            ctx.fillStyle = "red";
-            ctx.fillRect(e.x,e.y,20,20);
+            e.desenhar();
             requestAnimationFrame(desenha);
             t0=t;
         }
