@@ -17,6 +17,7 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
+        let pontos=0;
         let p = {
             cor : "white",
             x : 150, y : 100,
@@ -28,11 +29,11 @@
         };
 
         const sprites=[];
-        for (let ne = 0; ne < 200; ne++) {
+        for (let ne = 0; ne < 200 ; ne++) {
             let e = {
                 cor : "red",
                 x : canvas.width *(1+10*Math.random()),
-                y : canvas.height *Math.random(),
+                y : canvas.height *(1+Math.random()),
                 ax : 0, ay : 0, 
                 vx : 0, vy : 0,
                 desenhar:desenharElemento,
@@ -83,8 +84,27 @@
                 sprites[s].controlar?.(p);
                 sprites[s].mover();
                 sprites[s].desenhar();
+
+                if(colidiram(o,sprite) && o!= sprite){
+                    o.x = -1000;
+                    o.y = -1000;
+                    o.vx=0;
+                    o.ax=0;
+                    sprite.x =1000; 
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos++;
+                }
+
+                if(colidiram(p,sprite) && o!= sprite){
+                    sprite.x =1000; 
+                    sprite.vx = 100;
+                    sprite.ax = 0;
+                    pontos -= 5;
+                }
             }
-            
+            ctx.fillStyle= "yellow";
+            ctx.fillText(pontos,10,30);
 
             requestAnimationFrame(desenha);
             t0=t;
@@ -102,8 +122,8 @@
                 this.y = this.y+ this.vy*dt;
             }
         function perseguirAlvo(alvo){
-            this.ay = 100*Math.sign(alvo.y - this.y) - 0.2*this.vy;
-            this.ax = 100*Math.sign(alvo.x - this.x) - 0.2*this.vx;
+            this.ay = 50*Math.sign(alvo.y - this.y) - 0.2*this.vy;
+            this.ax = 50*Math.sign(alvo.x - this.x) - 0.2*this.vx;
         }
         function evitarAlvo(alvo){
             this.ay = -0.5*(alvo.y - this.y) - 0.2*this.vy;
@@ -166,6 +186,13 @@
                     o.vx = 200;
                     break;
             }
+        }
+
+        function colidiram(A,B) {
+            return!((A.x > B.x +20)
+            ||(A.x +20< B.x)
+            ||(A.y > B.y +20)
+            ||(A.y +20< B.y));
         }
     </script>
 </body>
