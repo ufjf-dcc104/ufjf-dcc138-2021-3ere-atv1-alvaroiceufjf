@@ -42,6 +42,23 @@
             sprites.push(e);
         }
 
+        let o = {
+            cor : "blue",
+            x : -1000, y : 150,
+            ax : 0, ay : 0, 
+            vx : 0, vy : 0,
+            desenhar:desenharElemento,
+            mover:moverElemento,
+            controlar: function(){
+                if(this.x > canvas.width +60){
+                    this.x = -1000;
+                    this.ax = 0;
+                    this.vx = 0
+                }
+            }
+        };
+        sprites.push(o);    
+
         const K=180;
         let t0; let dt;
         requestAnimationFrame(desenha);
@@ -63,7 +80,7 @@
             for (let s = 0; s < sprites.length; s++) {
                 const sprite = sprites[s];
             
-                sprites[s].controlar(p);
+                sprites[s].controlar?.(p);
                 sprites[s].mover();
                 sprites[s].desenhar();
             }
@@ -141,6 +158,12 @@
                 case "ArrowLeft":
                     p.ax = 0;
                     p.vx = 0;
+                    break;
+                case " ":
+                    o.x=p.x;
+                    o.y=p.y;
+                    o.ax = 0;
+                    o.vx = 200;
                     break;
             }
         }
