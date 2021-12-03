@@ -33,7 +33,8 @@
             ax : 0, ay : 0, 
             vx : 0, vy : 0,
             desenhar:desenharElemento,
-            mover:moverElemento
+            mover:moverElemento,
+            controlar:perseguirAlvo
         };
 
         const K=180;
@@ -50,8 +51,9 @@
             ctx.fillRect(0,0,canvas.width,canvas.height);
 
             //Controladores
-            e.ay = 0.5*(p.y - e.y) - 0.2*e.vy;
-            e.ax = 0.5*(p.x - e.x) - 0.2*e.vx;
+            //e.controlar({x:250, y:120});
+            e.controlar(p);
+            
 
             //Dinâmica dos estados
             p.mover();
@@ -62,7 +64,7 @@
             p.desenhar();
 
             e.desenhar();
-            
+
             requestAnimationFrame(desenha);
             t0=t;
         }
@@ -78,6 +80,14 @@
                 this.x = this.x+ this.vx*dt;
                 this.y = this.y+ this.vy*dt;
             }
+        function perseguirAlvo(alvo){
+            this.ay = 0.5*(alvo.y - this.y) - 0.2*this.vy;
+            this.ax = 0.5*(alvo.x - this.x) - 0.2*this.vx;
+        }
+        function evitarAlvo(alvo){
+            this.ay = -0.5*(alvo.y - this.y) - 0.2*this.vy;
+            this.ax = -0.5*(alvo.x - this.x) - 0.2*this.vx;
+        }
 
         //Controle de velocidade
         addEventListener("keydown", teclaPressionada);
