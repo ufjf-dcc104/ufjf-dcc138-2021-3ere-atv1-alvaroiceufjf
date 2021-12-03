@@ -17,9 +17,14 @@
         let ctx = canvas.getContext("2d");
         canvas.width = 480;
         canvas.height = 320;
-        let x = 235; let y = 155;
+        let x = 150; let y = 100;
         let ax = 0; ay = 0; 
         let vx = 0; let vy = 0;
+
+        let ex = 300; let ey = 200;
+        let eax = 0; eay = 0; 
+        let evx = 0; let evy = 0;
+
         const K=180;
         let t0; let dt;
         requestAnimationFrame(desenha);
@@ -29,11 +34,20 @@
             t0 = t0 ?? t;
             dt = (t-t0)/1000;
 
+            //Controladores
+            eay = 0.5*(y - ey) - 0.2*evy;
+            eax = 0.5*(x - ex) - 0.2*evx;
+
             //Dinâmica dos estados
             vx = vx + ax*dt;
             vy = vy + ay*dt;
             x = x+ vx*dt;
             y = y+ vy*dt;
+
+            evx = evx + eax*dt;
+            evy = evy + eay*dt;
+            ex = ex+ evx*dt;
+            ey = ey+ evy*dt;
 
             //Desenha fundo
             ctx.fillStyle = "black";
@@ -41,6 +55,8 @@
             //Desenha elementos
             ctx.fillStyle = "white";
             ctx.fillRect(x,y,20,20);
+            ctx.fillStyle = "red";
+            ctx.fillRect(ex,ey,20,20);
             requestAnimationFrame(desenha);
             t0=t;
         }
