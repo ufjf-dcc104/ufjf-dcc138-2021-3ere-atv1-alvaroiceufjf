@@ -18,6 +18,8 @@
         canvas.width = 480;
         canvas.height = 320;
         let x = 235; let y = 155;
+        let vx = 0; let vy = 0;
+        const V=180;
         let t0; let dt;
         requestAnimationFrame(desenha);
         
@@ -42,23 +44,48 @@
 
         //Controle de velocidade
         addEventListener("keydown", teclaPressionada);
+        addEventListener("keyup", teclaSolta);
 
         function teclaPressionada(e){
+            console.log(e.key);
             switch(e.key){
                 case "ArrowUp":
-                    vy = -20;
+                    vy = -V;
                     break;
                     
                 case "ArrowDown":
-                    vy = +20;
+                    vy = +V;
                     break;
 
                 case "ArrowRight":
-                    vx = +20;
+                    vx = +V;
                     break;
 
                 case "ArrowLeft":
-                    vx = -20;
+                    vx = -V;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function teclaSolta(e){
+            console.log(e.key);
+            switch(e.key){
+                case "ArrowUp":
+                    vy = 0;
+                    break;
+                    
+                case "ArrowDown":
+                    vy = 0;
+                    break;
+
+                case "ArrowRight":
+                    vx = 0;
+                    break;
+
+                case "ArrowLeft":
+                    vx = 0;
                     break;
             }
         }
