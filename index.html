@@ -28,11 +28,11 @@
         };
 
         const sprites=[];
-        for (let ne = 0; ne < 2; ne++) {
+        for (let ne = 0; ne < 200; ne++) {
             let e = {
                 cor : "red",
-                x : canvas.width * Math.random(),
-                y : canvas.height * Math.random(),
+                x : canvas.width *(1+10*Math.random()),
+                y : canvas.height *Math.random(),
                 ax : 0, ay : 0, 
                 vx : 0, vy : 0,
                 desenhar:desenharElemento,
@@ -102,8 +102,8 @@
                 this.y = this.y+ this.vy*dt;
             }
         function perseguirAlvo(alvo){
-            this.ay = 0.5*(alvo.y - this.y) - 0.2*this.vy;
-            this.ax = 0.5*(alvo.x - this.x) - 0.2*this.vx;
+            this.ay = 100*Math.sign(alvo.y - this.y) - 0.2*this.vy;
+            this.ax = 100*Math.sign(alvo.x - this.x) - 0.2*this.vx;
         }
         function evitarAlvo(alvo){
             this.ay = -0.5*(alvo.y - this.y) - 0.2*this.vy;
