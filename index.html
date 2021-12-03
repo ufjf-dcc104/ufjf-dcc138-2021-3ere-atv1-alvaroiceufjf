@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DCC138 Atividade 1</title>
+    <title>DCC138 Atividade 2</title>
 </head>
 <body>
-    <h1>Atividade 01</h1>
+    <h1>Atividade 02</h1>
     <canvas>
 
     </canvas>
@@ -26,9 +26,9 @@
             t0 = t0 ?? t;
             dt = (t-t0)/1000;
 
-            //Movimentos
-            x = x+ 500*Math.cos(t/200)*dt;
-            y = y+ 500*Math.cos(t/200)*dt;
+            //Dinâmica dos estados
+            x = x+ vx*dt;
+            y = y+ vy*dt;
 
             //Desenha fundo
             ctx.fillStyle = "black";
@@ -39,7 +39,29 @@
             requestAnimationFrame(desenha);
             t0=t;
         }
-        
+
+        //Controle de velocidade
+        addEventListener("keydown", teclaPressionada);
+
+        function teclaPressionada(e){
+            switch(e.key){
+                case "ArrowUp":
+                    vy = -20;
+                    break;
+                    
+                case "ArrowDown":
+                    vy = +20;
+                    break;
+
+                case "ArrowRight":
+                    vx = +20;
+                    break;
+
+                case "ArrowLeft":
+                    vx = -20;
+                    break;
+            }
+        }
     </script>
 </body>
 </html>
